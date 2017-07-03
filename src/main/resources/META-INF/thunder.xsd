@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.microservice.com/schema/thunder"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:tool="http://www.springframework.org/schema/tool"
+	targetNamespace="http://www.microservice.com/schema/thunder">
+
+	<xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+	<xsd:import namespace="http://www.springframework.org/schema/beans" />
+	<xsd:import namespace="http://www.springframework.org/schema/tool" />
+
+	<xsd:element name="application" type="applicationType" />
+	<xsd:element name="registry" type="registryType" />
+	<xsd:element name="monitor" type="monitorType" />
+	<xsd:element name="reference" type="referenceType" />
+	<xsd:element name="service" type="serviceType" />
+	<xsd:element name="method" type="methodType" />
+	<xsd:element name="threadPool" type="threadPoolType" />
+
+	<xsd:complexType name="methodType">
+		<xsd:attribute name="name" type="xsd:string" use="required" />
+		<xsd:attribute name="argsType" type="xsd:string" use="optional" />
+		<xsd:attribute name="timeout" type="xsd:string" use="optional"
+			default="0" />
+		<xsd:attribute name="async" type="xsd:string" use="optional"
+			default="false" />
+		<xsd:attribute name="callback" type="xsd:string" use="optional" />
+	</xsd:complexType>
+
+
+	<xsd:complexType name="serviceType">
+		<xsd:complexContent>
+			<xsd:extension base="beans:identifiedType">
+				<xsd:attribute name="interface" type="xsd:token" use="required">
+					<xsd:annotation>
+						<xsd:appinfo>
+							<tool:annotation>
+								<tool:expected-type type="java.lang.Class" />
+							</tool:annotation>
+						</xsd:appinfo>
+					</xsd:annotation>
+				</xsd:attribute>
+				<xsd:attribute name="ref" type="xsd:string" use="required" />
+				<xsd:attribute name="timeout" type="xsd:int" use="optional" />
+				<xsd:attribute name="version" type="xsd:string" use="optional" />
+				<xsd:attribute name="weight" type="xsd:int" use="optional" />
+				<xsd:attribute name="proxy" type="xsd:string" use="optional" />
+				<xsd:attribute name="executes" type="xsd:int" use="optional" />
+				<xsd:attribute name="threadPool" type="xsd:string"
+					use="optional" />
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<xsd:complexType name="referenceType">
+		<xsd:complexContent>
+			<xsd:extension base="beans:identifiedType">
+				<xsd:sequence>
+					<xsd:element name="method" type="methodType" minOccurs="0"
+						maxOccurs="unbounded"></xsd:element>
+				</xsd:sequence>
+				<xsd:attribute name="interface" use="required" type="xsd:token">
+					<xsd:annotation>
+						<xsd:appinfo>
+							<tool:annotation>
+								<tool:expected-type type="java.lang.Class" />
+							</tool:annotation>
+						</xsd:appinfo>
+					</xsd:annotation>
+				</xsd:attribute>
+				<xsd:attribute name="timeout" type="xsd:int" use="optional" />
+				<xsd:attribute name="version" type="xsd:string" use="optional" />
+				<xsd:attribute name="loadbalance" type="xsd:string"
+					use="optional" />
+				<xsd:attribute name="proxy" type="xsd:string" use="optional" />
+				<xsd:attribute name="executes" type="xsd:int" use="optional" />
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<xsd:complexType name="threadPoolType">
+		<xsd:complexContent>
+			<xsd:extension base="beans:identifiedType">
+				<xsd:attribute name="threadpool" type="xsd:string"
+					use="optional">
+				</xsd:attribute>
+				<xsd:attribute name="corePoolSize" type="xsd:int" use="optional">
+				</xsd:attribute>
+				<xsd:attribute name="maximumPoolSize" type="xsd:int"
+					use="optional">
+				</xsd:attribute>
+				<xsd:attribute name="queues" type="xsd:int" use="optional">
+				</xsd:attribute>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<xsd:complexType name="applicationType">
+		<xsd:complexContent>
+			<xsd:extension base="beans:identifiedType">
+				<xsd:attribute name="appName" type="xsd:string" use="required" />
+				<xsd:attribute name="host" type="xsd:token" use="optional" />
+				<xsd:attribute name="port" type="xsd:string" use="optional" />
+				<xsd:attribute name="group" type="xsd:string" use="required" />
+				<xsd:attribute name="monitor" type="xsd:boolean" use="optional" />
+				<xsd:attribute name="max_message_size" type="xsd:int"
+					use="optional" />
+				<xsd:attribute name="send_buffer_size" type="xsd:int"
+					use="optional" />
+				<xsd:attribute name="recived_buffer_size" type="xsd:int"
+					use="optional" />
+				<xsd:attribute name="connect_timeout_millis" type="xsd:int"
+					use="optional" />
+				<xsd:attribute name="max_alive_millis" type="xsd:int"
+					use="optional" />
+				<xsd:attribute name="write_timeout" type="xsd:int"
+					use="optional" />
+				<xsd:attribute name="read_timeout" type="xsd:int" use="optional" />
+				<xsd:attribute name="write_buffer_high_water_mark"
+					type="xsd:int" use="optional" />
+				<xsd:attribute name="write_buffer_low_water_mark"
+					type="xsd:int" use="optional" />
+				<xsd:attribute name="so_backlog" type="xsd:int" use="optional" />
+				<xsd:attribute name="write_idle_time" type="xsd:int"
+					use="optional" />
+				<xsd:attribute name="read_idle_time" type="xsd:int"
+					use="optional" />
+				<xsd:attribute name="all_idle_time" type="xsd:int"
+					use="optional" />
+				<xsd:attribute name="reconnect_attempt_delay" type="xsd:int"
+					use="optional" />
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<xsd:complexType name="registryType">
+		<xsd:complexContent>
+			<xsd:extension base="beans:identifiedType">
+				<xsd:attribute name="address" type="xsd:token" use="optional" />
+				<xsd:attribute name="zookeeper_session_timeout" type="xsd:int"
+					use="optional" />
+				<xsd:attribute name="zookeeper_connect_timeout" type="xsd:int"
+					use="optional" />
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<xsd:complexType name="monitorType">
+		<xsd:attribute name="username" type="xsd:string" use="optional" />
+		<xsd:attribute name="password" type="xsd:string" use="optional" />
+	</xsd:complexType>
+
+
+</xsd:schema>
