@@ -14,16 +14,17 @@
 	<xsd:element name="reference" type="referenceType" />
 	<xsd:element name="service" type="serviceType" />
 	<xsd:element name="method" type="methodType" />
-	<xsd:element name="threadPool" type="threadPoolType" />
+	<xsd:element name="provider" type="providerType" />
 
 	<xsd:complexType name="methodType">
 		<xsd:attribute name="name" type="xsd:string" use="required" />
 		<xsd:attribute name="argsType" type="xsd:string" use="optional" />
-		<xsd:attribute name="timeout" type="xsd:string" use="optional"
-			default="0" />
-		<xsd:attribute name="async" type="xsd:string" use="optional"
-			default="false" />
+		<xsd:attribute name="timeout" type="xsd:int" use="optional" />
+		<xsd:attribute name="async" type="xsd:boolean" use="optional" />
 		<xsd:attribute name="callback" type="xsd:string" use="optional" />
+		<xsd:attribute name="loadbalance" type="xsd:string" use="optional" />
+		<xsd:attribute name="sent" type="xsd:boolean" use="optional" />
+		<xsd:attribute name="executes" type="xsd:int" use="optional" />
 	</xsd:complexType>
 
 
@@ -45,8 +46,8 @@
 				<xsd:attribute name="weight" type="xsd:int" use="optional" />
 				<xsd:attribute name="proxy" type="xsd:string" use="optional" />
 				<xsd:attribute name="executes" type="xsd:int" use="optional" />
-				<xsd:attribute name="threadPool" type="xsd:string"
-					use="optional" />
+				<xsd:attribute name="delay" type="xsd:int" use="optional" />
+				<xsd:attribute name="provider" type="xsd:string" use="optional" />
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
@@ -72,24 +73,23 @@
 				<xsd:attribute name="loadbalance" type="xsd:string"
 					use="optional" />
 				<xsd:attribute name="proxy" type="xsd:string" use="optional" />
+				<xsd:attribute name="sent" type="xsd:boolean" use="optional" />
 				<xsd:attribute name="executes" type="xsd:int" use="optional" />
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
 
-	<xsd:complexType name="threadPoolType">
+	<xsd:complexType name="providerType">
 		<xsd:complexContent>
 			<xsd:extension base="beans:identifiedType">
 				<xsd:attribute name="threadpool" type="xsd:string"
-					use="optional">
-				</xsd:attribute>
-				<xsd:attribute name="corePoolSize" type="xsd:int" use="optional">
-				</xsd:attribute>
-				<xsd:attribute name="maximumPoolSize" type="xsd:int"
-					use="optional">
-				</xsd:attribute>
-				<xsd:attribute name="queues" type="xsd:int" use="optional">
-				</xsd:attribute>
+					use="optional" />
+				<xsd:attribute name="poolsize" type="xsd:int" use="optional" />
+				<xsd:attribute name="corepoolsize" type="xsd:int" use="optional" />
+				<xsd:attribute name="maximumpoolsize" type="xsd:int"
+					use="optional" />
+				<xsd:attribute name="queues" type="xsd:int" use="optional" />
+				<xsd:attribute name="default" type="xsd:boolean" use="optional" />
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
@@ -110,15 +110,9 @@
 					use="optional" />
 				<xsd:attribute name="connect_timeout_millis" type="xsd:int"
 					use="optional" />
-				<xsd:attribute name="max_alive_millis" type="xsd:int"
-					use="optional" />
 				<xsd:attribute name="write_timeout" type="xsd:int"
 					use="optional" />
 				<xsd:attribute name="read_timeout" type="xsd:int" use="optional" />
-				<xsd:attribute name="write_buffer_high_water_mark"
-					type="xsd:int" use="optional" />
-				<xsd:attribute name="write_buffer_low_water_mark"
-					type="xsd:int" use="optional" />
 				<xsd:attribute name="so_backlog" type="xsd:int" use="optional" />
 				<xsd:attribute name="write_idle_time" type="xsd:int"
 					use="optional" />
@@ -145,8 +139,8 @@
 	</xsd:complexType>
 
 	<xsd:complexType name="monitorType">
-		<xsd:attribute name="username" type="xsd:string" use="optional" />
-		<xsd:attribute name="password" type="xsd:string" use="optional" />
+		<!-- <xsd:attribute name="username" type="xsd:string" use="optional" />
+		<xsd:attribute name="password" type="xsd:string" use="optional" /> -->
 	</xsd:complexType>
 
 
